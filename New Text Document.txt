@@ -1,0 +1,236 @@
+#include<stdio.h>
+//#include<conio.h>
+#include<stdlib.h>
+
+void addstudent();
+void studentrecord();
+void searchstudent();
+void delete();
+
+struct student{
+    char first_name[10];
+    char last_name[10];
+    int roll_no;
+    char class[10];
+    int marks301;
+    int marks302;
+    int marks303;
+    int marks304;
+    int marks305;
+    float per;
+};
+void main(){
+    int choice;
+    while(choice!=5){
+        printf("n\n\n\t\t\t=====MST RESULT DISPLAY SYSTEM\n");
+        printf("\t\t\t  1.Add Student Recoards\n");
+        printf("\t\t\t  2. Student Recoards\n");
+        printf("\t\t\t  3. Search Student\n");
+        printf("\t\t\t  4. Delete Recoard\n");
+        printf("\t\t\t  5. Exit\n");
+        printf("\t\t\t  ________________________\n");
+
+        scanf("%i",&choice);
+
+        switch(choice){
+            case 1:
+                  //clrscr();
+                  addstudent();
+                  //clrscr();
+                  break;
+
+            case 2:
+                  //clrscr(); 
+                  studentrecord();
+                  printf("\t\t\t\tpress any key to exit\n");
+                  getch();
+                  //clrscr();
+                  break; 
+
+            case 3:
+                 // clrscr(); 
+                  searchstudent();
+                  printf("\t\t\t\tpress any key to exit\n");
+                  getch();
+                  //clrscr();
+                  break; 
+
+            case 4:
+                  //clrscr(); 
+                  delete();
+                  printf("\t\t\t\tpress any key to exit\n");
+                  getch();
+                  //clrscr();
+                  break;
+
+            case 5:
+                  //clrscr();
+                  printf("\n\t\t\t thank you,use this swoftware\n");
+                  exit(0);
+                  break;
+
+            default:
+                  //clrscr(); 
+                  getch();
+                  printf("\n\t\t\tEnter the valid number");
+                  printf("\n\t\t\tpress any key to continue.......\n");
+                  getch();
+                  //clrscr();
+                  break;
+        }
+        
+        
+            }
+}
+void addstudent(){
+    char another;
+    FILE *fp;
+    struct student info;
+
+    do{
+        //clrscr();
+        printf("\t\t\t\t*******Add Student Data********\n\n\n");
+        fp=fopen("student_info.txt","a");
+        printf("\n\t\t Enter the first Name : ");
+        scanf("%s",&info.first_name);
+      
+        printf("\n\t\t Enter the last Name : ");
+        scanf("%s",&info.last_name);
+       
+        printf("\n\t\t Enter the roll no : ");
+        scanf("%s",&info.roll_no);
+       
+        printf("\n\t\t Enter the EEES marks : ");
+        scanf("%i",&info.marks301);
+       
+        printf("\n\t\t Enter the Discret marks : ");
+        scanf("%i",&info.marks302);
+        
+        printf("\n\t\t Enter the Data structer  marks : ");
+        scanf("%i",&info.marks303);
+        
+        printf("\n\t\t Enter the oopm marks : ");
+        scanf("%i",&info.marks304);
+
+        printf("\n\t\t Enter the DCS marks : ");
+        scanf("%i",&info.marks305);
+
+        printf("\n\t\t Total percentage : %d",(info.marks301+info.marks302+info.marks303+info.marks304+info.marks305)/5);
+        
+
+        printf("\n\t\t\t_____________________________\n");
+
+        if(fp==NULL){
+            fprintf(stderr,"\t\t\t Can't open file\n");
+        }
+        else{
+            printf("\t\t\tRecoard stored successfuly\n");
+        }
+        fwrite(&info,sizeof(struct student),1,fp);
+        fclose(fp);
+
+        printf("\t\t\tDo you want to add another recoard(y/n) : ");
+        scanf("%s",another);
+
+          
+        }while(another=='y'||another=='y');
+    }
+    void studentrecord(){
+        FILE *fp;
+         struct student info;
+        fp=fopen("Student-info","t"); 
+
+        printf("\t\t\t======Student Recoards======\n\n\n");
+
+        if(fp==NULL){
+            fprintf(stderr,"\t\t\tcan't open file\n");
+        }else{
+            printf("\t\t\tRecords\n");
+            printf("\t\t\t\t______________________\n\n");
+        }
+        while(fread(&info,sizeof(struct student),1,fp)){
+            printf("\n\t\t Student name : %s%s",info.first_name,info.last_name);
+            printf("\n\t\t Roll no: %i",info.roll_no);
+            printf("\n\t\t EEES marks : %i",info.marks301);
+            printf("\n\t\t Dirscret marks : %i",info.marks302);
+            printf("\n\t\t Data structur marks : %i",info.marks303);
+            printf("\n\t\t oopm marks : %i",info.marks304);
+            printf("\n\t\t DCS marks : %i",info.marks305);
+            printf("\n\t\t percantage : %.1f",info.per);
+            printf("\n\t\t\t________________________________\n");
+           
+        }
+        fclose(fp);
+        getch();
+    }
+void searchstudent(){
+    FILE *fp;
+    struct student info;
+    int roll_no,found=0;
+
+    fp=fopen("student_info","r");
+
+    printf("\t\t\t\t======Search Student======\n\n\n");
+    printf("\t\t\tEnter roll no :");
+    scanf("%i",&roll_no);
+
+        while(fread(&info,sizeof(struct student),1,fp)){
+            if(info,roll_no==roll_no){
+                found=1;
+            }
+            printf("\n\t\t Student name : %s%s",info.first_name,info.last_name);
+            printf("\n\t\t Roll no: %i",info.roll_no);
+            printf("\n\t\t EEES marks : %i",info.marks301);
+            printf("\n\t\t Dirscret marks : %i",info.marks302);
+            printf("\n\t\t Data structur marks : %i",info.marks303);
+            printf("\n\t\t oopm marks : %i",info.marks304);
+            printf("\n\t\t DCS marks : %i",info.marks305);
+            printf("\n\t\t percantage : %.1f",info.per);
+            printf("\n\t\t\t_____________________________\n");
+           
+        }
+
+        if(!found){
+            printf("\n\t\t\tRecoard not found\n");
+        }
+        fclose(fp);
+        getch();
+
+}
+void delete(){
+   FILE *fp,*fp1;
+    struct student info;
+    int roll_no,found=0;
+    printf("\t\t\t\t======Delete Student Recoard======\n\n\n");
+    fp=fopen("student_info","r");
+    fp=fopen("temp.txt","w");
+    printf("\t\tEnter roll no :");
+    scanf("%i",&roll_no);
+
+    if(fp==NULL){
+            fprintf(stderr,"\t\t\t Can't open file\n");
+        }
+  while(fread(&info,sizeof(struct student),1,fp)){
+            if(info,roll_no==roll_no){
+                found=1;
+            }else{
+                fwrite(&info,sizeof(struct student),1,fp1);
+            }  
+  }fclose(fp);
+   fclose(fp1);    
+
+   if(found){
+    remove("student_info");
+    rename("temp.txt","Student_info");
+    printf("\n\t\t\tRecoard deleted successfuly\n");
+   } 
+   if(!found){
+    printf("\n\t\t\tRecoard not found\n");
+   }
+   getch();
+  
+}
+
+
+
+
